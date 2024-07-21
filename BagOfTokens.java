@@ -6,34 +6,32 @@ class Solution {
         Arrays.sort(tokens);
         int start = 0, end = tokens.length-1;
 
-        if (start < tokens.length && power < tokens[start]) {
-            return score;
-        }
-
-        while (start < end) {
+        while (start <= end) {
             if (power >= tokens[start]) {
+                score++;
                 power -= tokens[start];
-                score += 1;
-                start += 1;
-            } else {
+                start++;
+            } else if (start < end && score > 0) {
+                score--;
                 power += tokens[end];
-                score -= 1;
-                end -= 1;
+                end--;
+            } else {
+                return score;
             }
-        }
-
-        if (start < tokens.length && power >= tokens[start]) {
-            power -= tokens[start];
-            score += 1;
-            start += 1;
         }
 
         return score;
     }
 }
 
+/**
+ * URL: https://leetcode.com/problems/bag-of-tokens/
+ */
 public class BagOfTokens {
     public static void main(String[] args) {
-        
+        int power = 200;
+        int[] tokens = new int[]{100, 200, 300, 400};
+
+        System.out.println(new Solution().bagOfTokensScore(tokens, power));
     }
 }
